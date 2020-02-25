@@ -10,14 +10,16 @@
     <%= stylesheet_pack_tag 'application' %>
   </head>
   <body>
-    <div id='teste'>div </div>
     <%= render partial: "layouts/menu" %>
+    
+    <div class="container">
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
-    <% end %>   
-    <%= yield %>
+    <% end %>  
+      <%= yield %>
+    </div>
   </body>
 </html>
