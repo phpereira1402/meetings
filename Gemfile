@@ -5,7 +5,9 @@ ruby '2.7.0'
 
 #Bootstrap
 gem 'bootstrap', '~> 4.4.1'
-gem 'jquery-rails'
+
+#Authenticação
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'

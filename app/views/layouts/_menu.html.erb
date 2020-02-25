@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <a href="#" class="navbar-brand">Brand</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active">Home</a>
+            <a href="#" class="nav-item nav-link">Profile</a>
+            <a href="#" class="nav-item nav-link">Messages</a>
+            <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reports</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <p class="navbar-text float-right">
+                <% if user_signed_in? %>
+                Logged in as <strong><%= current_user.email %></strong>.
+                <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+                <% else %>
+                <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+                <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+                <% end %>
+            </p>
+            <a href="#" class="nav-item nav-link">Login</a>
+        </div>
+        <div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                
+                                <span class="username username-hide-on-mobile"> <strong>Bem vindo, </strong> GRU - VIA BRASIL SAO </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li class="divider"> </li>
+                                
+                                <li>
+                                    <a href="/cliente/Account/TrocarSenha">
+                                        <i class="fa fa-key"></i> Trocar Minha Senha
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/cliente/Account/LogOut" class="red">
+                                        <i class="fa fa-sign-out"></i> Sair do sistema
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+                </div>
+    </div>
+
+
+
+</nav>
