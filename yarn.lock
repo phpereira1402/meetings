@@ -816,6 +816,13 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
+"@toast-ui/vue-calendar@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@toast-ui/vue-calendar/-/vue-calendar-1.1.1.tgz#64797e69a26c29a99c5cfcc052f1b56ce98ffe6a"
+  integrity sha512-2tjZabw7DJtexST9P0nYkjWPD74lDw0nO5F0B5/nTuu/KwiOnNcxsGtJYGEJHVajeY17vSvZWjMZg2fihXWGWw==
+  dependencies:
+    tui-calendar "^1.11.0"
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -7202,7 +7209,7 @@ tty-browserify@0.0.0:
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
 
-tui-calendar@^1.12.11:
+tui-calendar@^1.11.0, tui-calendar@^1.12.11:
   version "1.12.11"
   resolved "https://registry.yarnpkg.com/tui-calendar/-/tui-calendar-1.12.11.tgz#bb676180a8ce1603eddb8b1fb288b6947d873477"
   integrity sha512-uJ4DrRZ5OhypPyYgLyJhTuh3Y89Nsb92vusDvYYvOmJeeW5voEfFQjMUwYMYqmaEo3SuEDLTNoOi0DSJKgh2Aw==

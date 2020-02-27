@@ -1,31 +1,20 @@
 
+<div id="user-form"></div>
+<div id="">
+    <div class="alert alert-primary" role="alert">
+        <%= @name %>
+    </div>
+
+    
+    <div id="el_app">
+    </div>
 
 
-<div class="alert alert-primary" role="alert">
-  <%= @name %>
+
+    <div id="calendar" style="height: 800px;"></div>
+    
+
 </div>
-
-<div id="user-form">{{teste}}</div>
-
-
-
-
-<div id="calendar" style="height: 800px;"></div>
-
 <script>
-    $(document).ready( function() {
-
-        var calendar = new tui.Calendar('#calendar', {
-            defaultView: 'month',
-            taskView: true,
-            template: {
-            monthDayname: function(dayname) {
-                return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
-            }
-
-            }
-        });
-
-    });
-
+    
 </script>

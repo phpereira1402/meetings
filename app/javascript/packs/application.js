@@ -12,8 +12,12 @@ require("jquery")
 require('bootstrap')
 import 'bootstrap/dist/css/bootstrap'
 
-require('tui-calendar'); /* CommonJS */
-require("tui-calendar/dist/tui-calendar.css");
+var toastui = require('@toast-ui/vue-calendar');
+var Calendar = toastui.Calendar;
+//= require moment 
+//= require fullcalendar
+//= require fullcalendar/locale-all
+
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
