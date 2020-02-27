@@ -187,8 +187,8 @@ export default {
     init() {
       this.setRenderRangeText();
     },
-    onBeforeCreateSchedule(){
-      console.log('teste')  ;
+    onBeforeCreateSchedule(e){
+      console.log(e)  ;
       Rails.ajax({
         url: "/events.json",
         type: "GET",
