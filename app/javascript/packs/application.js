@@ -12,11 +12,16 @@ require("jquery")
 require('bootstrap')
 import 'bootstrap/dist/css/bootstrap'
 
-var toastui = require('@toast-ui/vue-calendar');
-var Calendar = toastui.Calendar;
+var toastui = require('@toast-ui/vue-calendar')
+var Calendar = toastui.Calendar
+
+var moment = require('moment')
+//moment().format()
+
 //= require moment 
-//= require fullcalendar
-//= require fullcalendar/locale-all
+
+
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -1,18 +1,14 @@
 
 <div id="user-form"></div>
 <div id="">
-    <div class="alert alert-primary" role="alert">
-        <%= @name %>
-    </div>
-
-    
-    <div id="el_app">
-    </div>
-
-
-
-    <div id="calendar" style="height: 800px;"></div>
-    
+   
+    <% if user_signed_in? %>
+        <div id="calendar" style="height: 800px;"></div>
+    <% else %>
+        <%= render partial: "layouts/welcome" %>     
+    <% end %>
+  
+  
 
 </div>
 <script>

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>{{dateRange}}TOAST UI Calendar + Vue</h1>
+  <h1>{{dateRange}}</h1>
   <div>
     <select v-model="selectedView">
       <option v-for="(options, index) in viewModeOptions" :value="options.value" :key="index">
@@ -35,6 +35,7 @@
             @afterRenderSchedule="onAfterRenderSchedule"
             @clickTimezonesCollapseBtn="onClickTimezonesCollapseBtn"
             @beforeCreateSchedule="onBeforeCreateSchedule"
+            @beforeUpdateSchedule="onBeforeUpdateSchedule"
   />
 </div>
 </template>
@@ -43,6 +44,8 @@ import Rails from "@rails/ujs"
 import 'tui-time-picker/dist/tui-time-picker.css';
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-calendar/dist/tui-calendar.css';
+import * as moment from 'moment';
+
 //import './app.css';
 
 import {Calendar} from '@toast-ui/vue-calendar';
@@ -65,7 +68,7 @@ const getDate = (type, start, value, operator) => {
 export default {
   name: 'Event',
   components: {
-    'calendar': Calendar
+    'calendar': Calendar,    
   },
   data() {
     return {
@@ -99,54 +102,65 @@ export default {
           borderColor: '#00a9ff'
         }
       ],
-      scheduleList: [
-        {
-          id: '1',
-          calendarId: '0',
-          title: 'TOAST UI Calendar Study',
-          category: 'time',
-          dueDateClass: '',
-          start: today.toISOString(),
-          end: getDate('hours', today, 3, '+').toISOString()
-        },
-        {
-          id: '2',
-          calendarId: '1',
-          title: 'Practice',
-          category: 'milestone',
-          dueDateClass: '',
-          start: getDate('date', today, 1, '+').toISOString(),
-          end: getDate('date', today, 1, '+').toISOString(),
-          isReadOnly: true
-        },
-        {
-          id: '3',
-          calendarId: '1',
-          title: 'FE Workshop',
-          category: 'allday',
-          dueDateClass: '',
-          start: getDate('date', today, 2, '-').toISOString(),
-          end: getDate('date', today, 1, '-').toISOString(),
-          isReadOnly: true
-        },
-        {
-          id: '4',
-          calendarId: '1',
-          title: 'Report',
-          category: 'time',
-          dueDateClass: '',
-          start: today.toISOString(),
-          end: getDate('hours', today, 1, '+').toISOString()
-        }
-      ],
+      scheduleList: [],
+      // scheduleList: [
+      //   {
+      //     id: '1',
+      //     calendarId: '0',
+      //     title: 'TOAST UI Calendar Study',
+      //     category: 'time',
+      //     dueDateClass: '',
+      //     start: today.toISOString(),
+      //     end: getDate('hours', today, 3, '+').toISOString(),
+      //     location: 'pt-BR'
+      //   },
+      //   {
+      //     id: '2',
+      //     calendarId: '1',
+      //     title: 'Practice',
+      //     category: 'milestone',
+      //     dueDateClass: '',
+      //     start: getDate('date', today, 1, '+').toISOString(),
+      //     end: getDate('date', today, 1, '+').toISOString(),
+      //     isReadOnly: true,
+      //     location: 'pt-BR'
+      //   },
+      //   {
+      //     id: '3',
+      //     calendarId: '1',
+      //     title: 'FE Workshop',
+      //     category: 'allday',
+      //     dueDateClass: '',
+      //     start: getDate('date', today, 2, '-').toISOString(),
+      //     end: getDate('date', today, 1, '-').toISOString(),
+      //     isReadOnly: true,
+      //     location: 'pt-BR'
+      //   },
+      //   {
+      //     id: '4',
+      //     calendarId: '1',
+      //     title: 'Report',
+      //     category: 'time',
+      //     dueDateClass: '',
+      //     start: today.toISOString(),
+      //     end: getDate('hours', today, 1, '+').toISOString(),
+      //     location: 'pt-BR'
+      //   },
+      //   {
+      //     id: '5',
+      //     calendarId: '1',
+      //     title: 'Teste',
+      //     category: 'time',
+      //     dueDateClass: '',
+      //     start: moment().toISOString(),
+      //     end: moment().add('hours', 2).toISOString(),
+      //     location: 'pt-BR'
+      //   }
+      // ],
       timezones: [{
-        timezoneOffset: 540,
-        displayLabel: 'GMT+09:00',
-        tooltip: 'Seoul'
-      }, {
-        timezoneOffset: -420,
-        displayLabel: 'GMT-08:00',
-        tooltip: 'Los Angeles'
+        timezoneOffset: -180,
+        displayLabel: 'GMT-03:00',
+        tooltip: 'São Paulo'
       }],
       theme: themeConfig,
       template: {
@@ -161,7 +175,66 @@ export default {
         },
         alldayTitle() {
           return 'Dia todo';
+        },
+         popupIsAllDay: function() {
+            return 'Dia todo';
+        },
+        popupStateFree: function() {
+            return 'Livre';
+        },
+        popupStateBusy: function() {
+            return 'Ocupado';
+        },
+        titlePlaceholder: function() {
+            return 'Título';
+        },
+        locationPlaceholder: function() {
+            return 'Descrição';
+        },
+        startDatePlaceholder: function() {
+            return 'Data Inicial';
+        },
+        endDatePlaceholder: function() {
+            return 'Data Final';
+        },
+        popupSave: function() {
+            return 'Gravar';
+        },
+        popupUpdate: function() {
+            return 'Gravar';
+        },
+        popupDetailDate: function(isAllDay, start, end) {
+            var isSameDate = moment(start).isSame(end);
+            var endFormat = (isSameDate ? '' : 'DD/MM/YYYY ') + 'HH:mm';
+
+            if (isAllDay) {
+                return moment(start.toDate()).format('DD/MM/YYYY') + (isSameDate ? '' : ' - ' + moment(end).toDate().format('DD/MM/YYYY'));
+            }
+
+            return (moment(start.toDate()).format('DD/MM/YYYY HH:mm') + ' - ' + moment(end.toDate()).format(endFormat));
+        },
+        popupDetailLocation: function(schedule) {
+            return 'Descrição : ' + schedule.location;
+        },
+        popupDetailUser: function(schedule) {
+            return 'Usuário : ' + (schedule.attendees || []).join(', ');
+        },
+        popupDetailState: function(schedule) {
+            return 'Estado : ' + schedule.state || 'Busy';
+        },
+        popupDetailRepeat: function(schedule) {
+            return 'Repetir : ' + schedule.recurrenceRule;
+        },
+        popupDetailBody: function(schedule) {
+            return 'Corpo : ' + schedule.body;
+        },
+        popupEdit: function() {
+            return 'Alterar';
+        },
+        popupDelete: function() {
+            return 'Excluir';
         }
+
       },
       month: {
         startDayOfWeek: 0
@@ -174,7 +247,8 @@ export default {
       scheduleView: true,
       useDetailPopup: true,
       disableDblClick: true,
-      isReadOnly: false
+      isReadOnly: false,
+      moment: moment
     };
   },
   watch: {
@@ -188,17 +262,68 @@ export default {
       this.setRenderRangeText();
     },
     onBeforeCreateSchedule(e){
+      console.log(moment());
+      console.log(e.start.toDate())  ;
       console.log(e)  ;
-      Rails.ajax({
+      let self = this;
+      $.ajax({
         url: "/events.json",
-        type: "GET",
+        type: "POST",
         dataType: "json",
-        data: "",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        processData: false,
+        data: JSON.stringify({event:
+          {
+                title: e.title,
+                description: e.location,
+                start: moment(e.start.toDate()).format('YYYY-MM-DDTHH:mm:ss'), 
+                end: moment(e.end.toDate()).format('YYYY-MM-DDTHH:mm:ss'),
+                state: e.state, 
+                isAllDay: e.isAllDay
+          }
+        }),
         success: function(data) {
-          console.log('sucesso')  ;
+          console.log(data)  ;
+          self.getScheduleList();
+
         },
         error: function(data) {
           console.log('error')  ;
+        }
+      })
+    },
+    onBeforeUpdateSchedule(e){
+      console.log(moment());
+      console.log(e.start.toDate())  ;
+      console.log(e)  ;
+      let self = this;
+      $.ajax({
+        url: "/events/"+ e.schedule.id +".json",
+        type: "PUT",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        processData: false,
+        data: JSON.stringify({event:
+          {
+                id: e.schedule.id,
+                title: e.changes.title != null ? e.changes.title : e.schedule.title,
+                description: e.changes.location != null ? e.changes.location : e.schedule.location,
+                start: e.changes.start != null ? moment(e.changes.start.toDate()).format('YYYY-MM-DDTHH:mm:ss'): moment(e.schedule.start.toDate()).format('YYYY-MM-DDTHH:mm:ss'), 
+                end: e.changes.end != null ? moment(e.changes.end.toDate()).format('YYYY-MM-DDTHH:mm:ss'): moment(e.schedule.end.toDate()).format('YYYY-MM-DDTHH:mm:ss'),
+                state: e.changes.state != null ? e.changes.state : e.schedule.state, 
+                isAllDay: e.changes.isAllDay != null ? e.changes.isAllDay : e.schedule.isAllDay
+          }
+        }),
+        success: function(data) {
+          console.log(data)  ;
+          self.getScheduleList();
+
+        },
+        error: function(data) {
+          console.log('error')  ;          
+          self.getScheduleList();
         }
       })
     },
@@ -216,23 +341,68 @@ export default {
 
       switch (view) {
         case 'month':
-          dateRangeText = `${year}-${month}`;
+          dateRangeText = moment(rangeStart.toDate()).add('month', 1).format('MM') + '/' +moment(rangeStart.toDate()).format('YYYY');
           break;
         case 'week':
-          year = rangeStart.getFullYear();
-          month = rangeStart.getMonth() + 1;
-          date = rangeStart.getDate();
-          endMonth = rangeEnd.getMonth() + 1;
-          endDate = rangeEnd.getDate();
+          year = moment(rangeStart.toDate()).format('YYYY');
+          month = moment(rangeStart.toDate()).add('month', 1).format('MM');
+          date = moment(rangeStart.toDate()).format('DD');
+          endMonth = moment(rangeEnd.toDate()).add('month', 1).format('MM');
+          endDate = moment(rangeEnd.toDate()).format('DD');
 
-          start = `${year}-${month}-${date}`;
-          end = `${endMonth}-${endDate}`;
+          start = `${date}/${month}/${year}`;
+          end = `${endDate}/${endMonth}`;
           dateRangeText = `${start} ~ ${end}`;
           break;
         default:
-          dateRangeText = `${year}-${month}-${date}`;
+          dateRangeText = moment(rangeStart.toDate()).format('DD') + '/'+ moment(rangeStart.toDate()).add('month', 1).format('MM') + '/' +moment(rangeStart.toDate()).format('YYYY');
       }
       this.dateRange = dateRangeText;
+      this.getScheduleList();
+    },
+    async getScheduleList(){
+      const {invoke} = this.$refs.tuiCal;
+      const start = invoke('getDateRangeStart');
+      const end = invoke('getDateRangeEnd');
+
+      let self = this;
+      var q = 'start=' + moment(start.toDate()).format('YYYY-MM-DDTHH:mm:ss') + '&end=' + moment(end.toDate()).add('days', 1).format('YYYY-MM-DDTHH:mm:ss');
+
+      $.ajax({
+        url: "/events.json?"+ q,
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        processData: false,
+        
+        success: function(data) {
+          //self.scheduleList = [];
+          for (var i = 0; i < data.length; i++){
+            
+            self.scheduleList.push({
+              id: data[i].id,
+              calendarId: '0',
+              title: data[i].title,
+              category: data[i].isAllDay == 1 ? 'allday' : 'time',
+              state: data[i].state,
+              dueDateClass: '',
+              start: self.moment(data[i].start).format('YYYY-MM-DDTHH:mm:ss'),
+              end: self.moment(data[i].end).format('YYYY-MM-DDTHH:mm:ss'),
+              location: data[i].description,
+              isReadOnly: false// aqui
+              //isReadOnly: data[i].user_id != self.getUserId()
+              
+            });
+          }          
+        },
+        error: function(data) {
+          console.log('error')  ;
+        }
+      })
+    },
+    getUserId(){
+      return document.cookie.match('(^|;) ?' + 'id' + '=([^;]*)(;|$)')[2]
     },
     onClickNavi(event) {
       if (event.target.tagName === 'BUTTON') {
@@ -260,10 +430,29 @@ export default {
     onBeforeDeleteSchedule(res) {
       console.group('onBeforeDeleteSchedule');
       console.log('Schedule Info : ', res.schedule);
-      console.groupEnd();
+      console.groupEnd();      
+      let self = this;
+      $.ajax({
+        url: "/events/"+ res.schedule.id + ".json",
+        type: "DELETE",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        cache: false,
+        processData: false,     
+        success: function(data) {
+          console.log(data)  ;
+          self.getScheduleList();
+          const idx = this.scheduleList.findIndex(item => item.id === res.schedule.id);
+          this.scheduleList.splice(idx, 1);
+          self.success('Evento excluído com sucesso');
+        },
+        error: function(data) {
+          console.log('error') ;
+          self.error('Não foi possível excluir o evento');
+        }
+      })
 
-      const idx = this.scheduleList.findIndex(item => item.id === res.schedule.id);
-      this.scheduleList.splice(idx, 1);
+      
     },
     onAfterRenderSchedule(res) {
       console.group('onAfterRenderSchedule');
@@ -283,6 +472,14 @@ export default {
         this.theme['week.timegridLeft.width'] = '50px';
         this.theme['week.daygridLeft.width'] = '50px';
       }
+    },
+    error(msg){
+      $("#error").html(msg).show();
+      setTimeout( function(){$('#error').hide();} , 3000);
+    },
+    success(title, msg){
+      $("#success").html(mdg).show();
+      setTimeout( function(){$('#success').hide();} , 3000);
     }
   },
   mounted() {

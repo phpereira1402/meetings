@@ -10,12 +10,22 @@
     <%= stylesheet_pack_tag 'application' %>    
     <%= stylesheet_pack_tag 'hello_vue', media: 'all' %>
     <%= javascript_pack_tag 'hello_vue' %>
+   
     
   </head>
   <body>
-    <%= render partial: "layouts/menu" %>
-    
+    <% if user_signed_in? %>
+      <%= render partial: "layouts/menu" %>                    
+    <% end %>
+
     <div class="container">
+    <div class="alert alert-success" id="success" role="alert" style="display:none">
+      This is a success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+    </div>
+    <div class="alert alert-danger" id="error" role="alert" style="display:none">
+      This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+    </div>
+
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>

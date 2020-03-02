@@ -3,13 +3,17 @@
 one:
   title: MyString
   description: MyText
-  start_time: 2020-02-25 14:55:20
-  end_time: 2020-02-25 14:55:20
+  start: 2020-02-25 14:55:20
+  end: 2020-02-25 14:55:20
+  state: Free
+  isAllDay: 0
   user: one
 
 two:
   title: MyString
   description: MyText
-  start_time: 2020-02-25 14:55:20
-  end_time: 2020-02-25 14:55:20
+  start: 2020-02-25 14:55:20
+  end: 2020-02-25 14:55:20
+  state: Free
+  isAllDay: 1
   user: two
