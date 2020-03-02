@@ -81,7 +81,8 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    @event.find(params[:id])
+    @event = Event.find(params[:id])
+
     if @event.user_id == current_user.id
       @event.destroy
     end

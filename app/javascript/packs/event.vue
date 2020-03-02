@@ -377,7 +377,7 @@ export default {
         processData: false,
         
         success: function(data) {
-          //self.scheduleList = [];
+          self.scheduleList = [];
           for (var i = 0; i < data.length; i++){
             
             self.scheduleList.push({
@@ -390,8 +390,8 @@ export default {
               start: self.moment(data[i].start).format('YYYY-MM-DDTHH:mm:ss'),
               end: self.moment(data[i].end).format('YYYY-MM-DDTHH:mm:ss'),
               location: data[i].description,
-              isReadOnly: false// aqui
-              //isReadOnly: data[i].user_id != self.getUserId()
+              //isReadOnly: false// aqui
+              isReadOnly: data[i].user_id != self.getUserId()
               
             });
           }          
@@ -440,10 +440,9 @@ export default {
         cache: false,
         processData: false,     
         success: function(data) {
-          console.log(data)  ;
-          self.getScheduleList();
-          const idx = this.scheduleList.findIndex(item => item.id === res.schedule.id);
-          this.scheduleList.splice(idx, 1);
+          console.log(data) ;          
+          const idx = self.scheduleList.findIndex(item => item.id === res.schedule.id);
+          self.scheduleList.splice(idx, 1);
           self.success('Evento excluído com sucesso');
         },
         error: function(data) {
@@ -621,7 +620,7 @@ body {
 }
 
 /**  custom bootstrap - start */
-.btn {
+/* .btn {
     border-radius: 25px;
     border-color: #ddd;
 }
@@ -645,7 +644,7 @@ body {
 
 .btn:focus:active, .btn:focus, .btn:active {
     outline: none;
-}
+} */
 
 .open > .dropdown-toggle.btn-default {
     background-color: #fff;
